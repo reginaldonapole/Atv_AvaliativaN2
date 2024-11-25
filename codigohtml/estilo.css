@@ -1,0 +1,90 @@
+/* Estilos gerais */
+body {
+    font-family: sans-serif;
+    border: 15px groove #8e8e8e;
+    border-radius: 5px; 
+    padding: 40px;
+   /* border-bottom: none;*/
+    
+}   
+
+a {
+    text-decoration: none; /* Remove sublinhado dos links */
+}
+
+button {
+    background-color: #008CBA; /* Cor de fundo do botão */
+    border: none; /* Remove borda do botão */
+    color: white; /* Cor do texto do botão */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    text-align: center; /* Alinhamento do texto do botão */
+    display: inline-block; /* Define o botão como um elemento inline-block */
+    font-size: 16px; /* Tamanho da fonte do botão */
+    margin: 4px 2px; /* Margem do botão */
+    cursor: pointer; /* Define o cursor como pointer ao passar o mouse sobre o botão */
+    border-radius: 5px; /* Arredonda os cantos do botão */
+}
+
+/* Estilos da lista de colaboradores */
+#colaborador-list li {
+    list-style: none; /* Remove marcadores da lista */
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Estilos do formulário */
+#colaboradorForm label {
+    display: block; /* Define os labels como elementos de bloco */
+    margin-bottom: 5px;
+}
+
+#colaboradorForm input[type="text"],
+#colaboradorForm input[type="number"] {
+    width: 390px; /* Define a largura dos campos de texto */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona sombra aos campos */
+}
+
+.pagina1{
+    text-align: center;
+}   
+
+.btnInserir{
+    display: block;  /* Torna o botão um elemento de bloco */
+    margin-left: auto; /* Define a margem esquerda como automática */
+    margin-right: 0;
+    background-color: #00de5d;
+    color: #000000;
+    
+
+}
+.bodyFormulario {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 85vh;
+    margin: 0;
+   
+    
+}
+
+div {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin: 0;
+    background-color: white;  
+    padding: 20px; 
+    border-radius: 5px; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    flex-direction: column
+}
+.bodyFormulario h1 { 
+    text-align: center;
+    margin-bottom: 20px; /* Adiciona espaço entre o título e o formulário */
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Formulário de Colaborador</title>
+</head>
+<body class="bodyFormulario">
+    <div>
+        <h1>Formulário de Colaborador</h1>
+
+        <form id="colaboradorForm">
+            <input type="hidden" id="id" name="id">
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+            <br><br>
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required>
+            <br><br>
+
+            <label for="departamento">Departamento:</label>
+            <input type="text" id="departamento" name="departamento" required>
+            <br><br>
+
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <script>
+        const apiUrl = 'http://localhost:8080/colaborador';
+        const form = document.getElementById('colaboradorForm');
+        const urlParams = new URLSearchParams(window.location.search);
+        const colaboradorId = urlParams.get('id');
+
+        // Preenche o formulário para edição, se um ID for fornecido na URL
+        if (colaboradorId) {
+            (async () => {
+                try {
+                    const response = await fetch(`${apiUrl}/${colaboradorId}`);
+                    if (!response.ok) throw new Error(`Erro: ${response.status}`);
+                    const colaborador = await response.json();
+
+                    document.getElementById('id').value = colaborador.id;
+                    document.getElementById('nome').value = colaborador.nome;
+                    document.getElementById('cpf').value = colaborador.cpf;
+                    document.getElementById('departamento').value = colaborador.departamento;
+                } catch (error) {
+                    console.error('Erro ao buscar colaborador:', error);
+                    alert('Não foi possível carregar os dados do colaborador.');
+                }
+            })();
+        }
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('id').value;
+            const nome = document.getElementById('nome').value;
+            const cpf = document.getElementById('cpf').value;
+            const departamento = document.getElementById('departamento').value;
+
+            const colaborador = { nome, cpf, departamento };
+
+            try {
+                let response;
+                if (id) {
+                    // Atualizar colaborador (PUT)
+                    response = await fetch(`${apiUrl}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(colaborador)
+                    });
+                } else {
+                    // Incluir colaborador (POST)
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(colaborador)
+                    });
+                }
+
+                if (!response.ok) throw new Error(`Erro: ${response.status}`);
+
+                alert('Colaborador salvo com sucesso!');
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Erro ao salvar colaborador:', error);
+                alert('Erro ao salvar os dados. Tente novamente mais tarde.');
+            }
+        });
+
+
+    </script>
+</body>
+</html>

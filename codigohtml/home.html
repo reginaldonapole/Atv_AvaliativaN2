@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>CRUD de Colaboradores</title>
+    <style>
+        #colaborador-list {
+            margin-top: 20px;
+        }
+        #colaborador-list li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="pagina1">
+        Gestão de Colaboradores
+    </h1>
+
+    <button class="btnInserir" onclick="window.location.href='formulario.html'" >
+        Inserir novo colaborador
+    </button>
+
+    <h3>Lista de Colaboradores</h3>
+    <ul id="colaborador-list"></ul>
+
+    <script>
+        const apiUrl = 'http://localhost:8080/colaborador'; // Adapte para a URL da sua API
+
+        async function listarColaboradores() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error(`Erro: ${response.status}`);
+                const colaboradores = await response.json();
+
+                const colaboradorList = document.getElementById('colaborador-list');
+                colaboradorList.innerHTML = '';
+
+                colaboradores.forEach(colaborador => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${colaborador.id} - ${colaborador.nome} - ${colaborador.cpf} - ${colaborador.departamento}`;
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Excluir';
+                    deleteButton.onclick = () => excluirColaborador(colaborador.id);
+                    listItem.appendChild(deleteButton);
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Editar';
+                    editButton.onclick = () => {
+                        // Redireciona para a página de formulário com o ID do colaborador
+                        window.location.href = `formulario.html?id=${colaborador.id}`; 
+                    };
+                    listItem.appendChild(editButton);
+
+                    colaboradorList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Erro ao listar colaboradores:', error);
+            }
+        }
+
+        async function excluirColaborador(id) {
+            try {
+                const response = await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error(`Erro ao excluir: ${response.status}`);
+                listarColaboradores();
+            } catch (error) {
+                console.error('Erro ao excluir colaborador:', error);
+            }
+        }
+
+        window.onload = listarColaboradores;
+    </script>
+</body>
+</html>
